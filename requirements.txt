@@ -5,3 +5,4 @@ altair
 seaborn
 pydeck
 matplotlib
+openpyxl
