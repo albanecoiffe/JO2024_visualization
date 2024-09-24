@@ -36,7 +36,7 @@ with st.expander("Dataset Overview"):
     df1.at[805, 'birthdate'] = "2003-09-09"
     df1.at[671, 'birthdate'] = "2002-11-20"
 
-    df_excel = pd.read_excel("médailles2024.xlsx")
+    df_excel = pd.read_excel("medailles2024.xlsx")
     # Merge the dataframes on 'slug', 'firstname', and 'lastname'
     df = pd.merge(df1, df_excel, on=['slug', 'firstname', 'lastname'], how='outer')   
 

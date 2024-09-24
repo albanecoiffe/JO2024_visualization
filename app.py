@@ -79,7 +79,7 @@ else:
     df1 = df1.drop(columns=['_geoloc', 'isMedalist'])
     
     # Load medal data
-    df_excel = pd.read_excel("médailles2024.xlsx")
+    df_excel = pd.read_excel("medailles2024.xlsx")
     df = pd.merge(df1, df_excel, on=['slug', 'firstname', 'lastname'], how='outer')   
     df.fillna(0, inplace=True)
     
