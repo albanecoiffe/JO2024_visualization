@@ -108,8 +108,8 @@ for i, col in enumerate([col4, col5, col6]):
     row = oldest_athletes.iloc[i]
     col.markdown(generate_athlete_card(row), unsafe_allow_html=True)
 
-# Athletes by Discipline
-st.subheader('3️⃣ Athletes by Discipline')
+# Number of Athletes in each Discipline
+st.subheader('3️⃣ Number of athletes in each Discipline')
 tab1, tab2 = st.tabs(["🏋🏻‍♀️ Paralympic Athletes", "🏃🏻‍♀️ Olympic Athletes"])
 
 with tab1:
@@ -177,3 +177,11 @@ for i, col in enumerate([col1, col2, col3]):
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+# The disipline with the most medals in 2024
+df['disciplines_str'] = df['disciplines'].apply(lambda x: ', '.join(x) if isinstance(x, list) else 'N/A')
+st.subheader('7️⃣ Discipline with the Most Medals in 2024')
+discipline_medals = df.groupby('disciplines_str')['total2024'].sum().sort_values(ascending=False)
+st.bar_chart(discipline_medals.head(10))
+
+
