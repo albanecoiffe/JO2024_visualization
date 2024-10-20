@@ -26,11 +26,6 @@ with st.sidebar:
     st.markdown('🌐: [GitHub](https://github.com/albanecoiffe)')
 
     # Navigation buttons
-    st.subheader("Navigation")
-    app_1 = st.button("🏅 French athletes")
-    app_2 = st.button("🗺️ Map of French athletes")
-    app_3 = st.button("🔥 Torch position")
-    main = st.button("🏠 Back to the main page")
 
 # Function to execute and display content of a Python file
 def execute_python_file(filepath):
@@ -42,82 +37,75 @@ def execute_python_file(filepath):
         st.error(f"Error executing the file {filepath}: {e}")
 
 # Navigation logic
-if app_1:
-    execute_python_file("app_1.py")  # Executes app_1.py
-elif app_2:
-    execute_python_file("app_2.py")  # Executes app_2.py
-elif app_3:
-    execute_python_file("app_3.py")  # Executes app_3.py
-else:
-    # Main homepage
-    st.title('🏆 Paris JO 2024 - Data Visualization Project')
-    st.markdown("""
-    **Welcome to the Paris 2024 Olympic Games data visualization dashboard.** 
-    This project is developed as part of a *Data Visualization* course, and it showcases data from the 
-    **Paris 2024 Olympic and Paralympic Games**, including information about athletes, medals, and the torch relay.
+# Main homepage
+st.title('🏆 Paris JO 2024 - Data Visualization Project')
+st.markdown("""
+**Welcome to the Paris 2024 Olympic Games data visualization dashboard.** 
+This project is developed as part of a *Data Visualization* course, and it showcases data from the 
+**Paris 2024 Olympic and Paralympic Games**, including information about athletes, medals, and the torch relay.
+""")
+
+# Data overview
+st.header("🚀 What this project covers:")
+
+st.markdown("""
+- **French Olympic and Paralympic athletes**: Explore athlete profiles, their disciplines, and their medal tallies.
+- **Map of French athletes**: Visualize the geographical spread of athletes across different disciplines.
+- **Torch position**: Track the current location of the Olympic torch across France.
+""")
+
+# French Athletes Data with expander
+with st.expander("📊 French Olympic and Paralympic Athletes data"):
+    st.write("""
+    This dataset contains information about French athletes participating in the Paris 2024 Olympic and Paralympic Games.
+    The columns include details such as name, gender, disciplines, Olympic participation, and a link to each athlete's photo.
     """)
+    # Load the data
+    file_path = "athlete_fr_2024.json"
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+
+    # Normalize the 'hits' section (athlete data) into a DataFrame
+    athletes_data = data['athletes']['hits']
+    df1 = pd.json_normalize(athletes_data)
+
+    # Extract the year of the Olympic Games and slug of the disciplines
+    df1['olympicGames'] = df1['olympicGames'].apply(lambda x: [game['year'] for game in x] if isinstance(x, list) else None)
+    df1['disciplines'] = df1['disciplines'].apply(lambda x: [discipline['slug'] for discipline in x] if isinstance(x, list) else None)
+    df1 = df1.drop(columns=['_geoloc', 'isMedalist'])
     
-    # Data overview
-    st.header("🚀 What this project covers:")
-    
-    st.markdown("""
-    - **French Olympic and Paralympic athletes**: Explore athlete profiles, their disciplines, and their medal tallies.
-    - **Map of French athletes**: Visualize the geographical spread of athletes across different disciplines.
-    - **Torch position**: Track the current location of the Olympic torch across France.
+    # Handling missing birthdates
+    df1.at[575, 'birthdate'] = "2005-04-08"
+    df1.at[129, 'birthdate'] = "2000-01-13"
+    df1.at[805, 'birthdate'] = "2003-09-09"
+    df1.at[671, 'birthdate'] = "2002-11-20"
+
+    df_excel = pd.read_excel("medailles2024.xlsx")
+    # Merge the dataframes on 'slug', 'firstname', and 'lastname'
+    df1 = pd.merge(df1, df_excel, on=['slug', 'firstname', 'lastname'], how='outer')   
+
+    # Fill missing medal values for Antoine Brizard
+    df1.at[737, 'or2024'] = 1
+    df1.at[737, 'argent2024'] = 0
+    df1.at[737, 'bronze 2024'] = 0
+    df1.at[737, 'total2024'] = 1
+
+    # Fill missing values with 0
+    df1.fillna(0, inplace=True)
+
+    st.write(df1)
+
+
+# Torch Relay Data with expander
+with st.expander("🔥 Torch Relay Position data"):
+    st.write("""
+    This dataset contains information about the position of the torch during the Paris 2024 Olympic and Paralympic Games.
+    The columns include details such as latitude and longitude.
     """)
-
-    # French Athletes Data with expander
-    with st.expander("📊 French Olympic and Paralympic Athletes data"):
-        st.write("""
-        This dataset contains information about French athletes participating in the Paris 2024 Olympic and Paralympic Games.
-        The columns include details such as name, gender, disciplines, Olympic participation, and a link to each athlete's photo.
-        """)
-        # Load the data
-        file_path = "athlete_fr_2024.json"
-        with open(file_path, 'r') as file:
-            data = json.load(file)
-
-        # Normalize the 'hits' section (athlete data) into a DataFrame
-        athletes_data = data['athletes']['hits']
-        df1 = pd.json_normalize(athletes_data)
-
-        # Extract the year of the Olympic Games and slug of the disciplines
-        df1['olympicGames'] = df1['olympicGames'].apply(lambda x: [game['year'] for game in x] if isinstance(x, list) else None)
-        df1['disciplines'] = df1['disciplines'].apply(lambda x: [discipline['slug'] for discipline in x] if isinstance(x, list) else None)
-        df1 = df1.drop(columns=['_geoloc', 'isMedalist'])
-        
-        # Handling missing birthdates
-        df1.at[575, 'birthdate'] = "2005-04-08"
-        df1.at[129, 'birthdate'] = "2000-01-13"
-        df1.at[805, 'birthdate'] = "2003-09-09"
-        df1.at[671, 'birthdate'] = "2002-11-20"
-
-        df_excel = pd.read_excel("medailles2024.xlsx")
-        # Merge the dataframes on 'slug', 'firstname', and 'lastname'
-        df1 = pd.merge(df1, df_excel, on=['slug', 'firstname', 'lastname'], how='outer')   
-
-        # Fill missing medal values for Antoine Brizard
-        df1.at[737, 'or2024'] = 1
-        df1.at[737, 'argent2024'] = 0
-        df1.at[737, 'bronze 2024'] = 0
-        df1.at[737, 'total2024'] = 1
-
-        # Fill missing values with 0
-        df1.fillna(0, inplace=True)
-
-        st.write(df1)
-
-
-    # Torch Relay Data with expander
-    with st.expander("🔥 Torch Relay Position data"):
-        st.write("""
-        This dataset contains information about the position of the torch during the Paris 2024 Olympic and Paralympic Games.
-        The columns include details such as latitude and longitude.
-        """)
-        file_path = "games_map_torch_position.xlsx"
-        with open(file_path, 'r') as file:
-            df2 = pd.read_excel(file_path, dtype={'latitude': float, 'longitude': float})
-        st.write(df2)
+    file_path = "games_map_torch_position.xlsx"
+    with open(file_path, 'r') as file:
+        df2 = pd.read_excel(file_path, dtype={'latitude': float, 'longitude': float})
+    st.write(df2)
 
 
 
@@ -400,3 +388,6 @@ r = pdk.Deck(
 st.pydeck_chart(r)
 
 st.markdown('This map shows the dynamic path of the Olympic torch over time based on the selected date range.')
+
+
+
