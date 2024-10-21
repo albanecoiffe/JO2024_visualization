@@ -56,11 +56,15 @@ with st.sidebar:
 # Main content (Experiences, projects, and education)
 st.image(banner_image, use_column_width=True)
 
-st.markdown("# À propos")
+st.markdown("---")
+st.markdown("## Formation")
 st.write("""
-Cavalière conciliant sports intenses avec Efrei Paris. Plus de 6 ans d'influence au sein d'une communauté comptant 40 000 abonnés.
+- **Master Data & IA à Efrei Paris (2021 - 2026)**  
+- **Semestre à l’étranger à ILAC Toronto (2023)**  
+- **Baccalauréat Scientifique (2021)**  
 """)
 
+st.markdown("---")
 st.markdown("## Expériences")
 st.write("""
 - **Stage chez iConcept (Janvier 2023)** : Stage commercial chez le premier revendeur Apple.
@@ -69,14 +73,7 @@ st.write("""
 - **Influenceuse Instagram (2017 - 2023)** : Gestion d'une communauté de plus de 40 000 abonnés, collaborations avec des marques dans l'équitation, et événements comme le Jumping International de Bordeaux.
 """)
 
-st.markdown("## Formation")
-st.write("""
-- **Master Data & IA à Efrei Paris (2021 - 2026)**  
-- **Semestre à l’étranger à ILAC Toronto (2023)**  
-- **Séjours en Chine et en Californie pour observer les ventes de grands crus et participer à des séjours linguistiques.**
-""")
-
-# Section Projets
+st.markdown("---")
 st.markdown("## Projets")
     
 # Projet Streamlit Data Visualisation
