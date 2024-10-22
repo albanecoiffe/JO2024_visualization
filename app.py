@@ -187,12 +187,12 @@ else:
     st.subheader('3️⃣ Number of athletes in each Discipline')
     tab1, tab2 = st.tabs(["🏋🏻‍♀️ Olympic Athletes", "🏃🏻‍♀️ Paralympic olympic Athletes"])
 
-    with tab1:
+    with tab2:
         st.subheader('Paralympic Athletes')
         para_disciplines = df1[df1['type'] == 'paralympic']['disciplines'].explode().value_counts()
         st.bar_chart(para_disciplines)
 
-    with tab2:
+    with tab1:
         st.subheader('Olympic Athletes')
         olympic_disciplines = df1[df1['type'] == 'olympic']['disciplines'].explode().value_counts()
         st.bar_chart(olympic_disciplines)
@@ -244,21 +244,15 @@ else:
 
     # The disipline with the most medals in 2024
     st.subheader('6️⃣ Discipline with the Most Medals in 2024')
-    tab5, tab6 = st.tabs(["🏋🏻‍♀️ Olympic Athletes", "🏃🏻‍♀️ Paralympic olympic Athletes"])
-
+    # Données pour les athlètes olympiques
     olympic_athletes = df1[df1['type'] == 'olympic']
     olympic_athletes['disciplines_str'] = olympic_athletes['disciplines'].apply(lambda x: ', '.join(x) if isinstance(x, list) else 'N/A')
     discipline_medals1 = olympic_athletes.groupby('disciplines_str')['total2024'].sum().sort_values(ascending=False)
-    tab5.subheader('Discipline with the Most Medals in 2024 (Olympic Athletes)')
-    tab5.bar_chart(discipline_medals1.head(10))
+    st.subheader('Discipline with the Most Medals in 2024 (🏋🏻‍♀️ Olympic Athletes)')
+    st.bar_chart(discipline_medals1.head(10))
 
-    para_athletes = df1[df1['type'] == 'paralympic']
-    para_athletes['disciplines_str'] = para_athletes['disciplines'].apply(lambda x: ', '.join(x) if isinstance(x, list) else 'N/A')
-    discipline_medals2 = para_athletes.groupby('disciplines_str')['total2024'].sum().sort_values(ascending=False)
 
-    with tab6:
-        st.subheader('Discipline with the Most Medals in 2024 (Para Athletes)')
-        st.bar_chart(discipline_medals2.head(10))
+
 
     # Part 3 : Visualizations the geographical distribution of athletes based on their latitude and longitude coordinates
 
