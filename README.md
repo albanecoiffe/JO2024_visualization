@@ -1,11 +1,18 @@
-# 🏆 Paris JO 2024 - Data Visualization Project   
+# 🏆 Paris Olympics 2024 - Data Visualization Project 
 
 [Streamlit Visualization](https://jo2024visualization.streamlit.app/)
 
-Bienvenue sur le tableau de bord de visualisation des données des Jeux Olympiques de Paris 2024. Ce projet a été développé dans le cadre d'un cours de Data Visualization, et il met en avant des données relatives aux Jeux Olympiques et Paralympiques de Paris 2024, y compris des informations sur les athlètes, les médailles, et le parcours du relais de la flamme olympique.
+Welcome to the Paris 2024 Olympic Games data visualization dashboard! This project was developed as part of a Data Visualization course and highlights data related to the Paris 2024 Olympic and Paralympic Games, including information about athletes, medals, and the Olympic torch relay route.
 
-## 🚀 Ce que couvre ce projet :
+🚀 What this project covers:
 
-- **Athlètes olympiques et paralympiques français** : Explorez les profils des athlètes français, leurs disciplines et leur palmarès en médailles.
-- **Carte des athlètes français** : Visualisez la répartition géographique des athlètes selon leurs disciplines respectives.
-- **Position de la torche** : Suivez en temps réel la position actuelle de la flamme olympique à travers la France.
+French Olympic and Paralympic Athletes: Explore the profiles of French athletes, their disciplines, and their medal achievements.
+Athletes' Map: Visualize the geographical distribution of athletes based on their respective disciplines.
+Torch Position: Track the real-time location of the Olympic flame as it travels across France.
+
+
+
+
+
+
+
