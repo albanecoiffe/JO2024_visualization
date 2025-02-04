@@ -4,7 +4,7 @@
 
 Welcome to the Paris 2024 Olympic Games data visualization dashboard! This project was developed as part of a Data Visualization course and highlights data related to the Paris 2024 Olympic and Paralympic Games, including information about athletes, medals, and the Olympic torch relay route.
 
-🚀 What this project covers:
+## 🚀 What this project covers:
 
 French Olympic and Paralympic Athletes: Explore the profiles of French athletes, their disciplines, and their medal achievements.
 Athletes' Map: Visualize the geographical distribution of athletes based on their respective disciplines.
